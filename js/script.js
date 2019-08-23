@@ -348,15 +348,15 @@ function guessLetter(){
             results.style.lineHeight = "20px";
         }
     }
-	/*if(numWrong==7){//stop in 7 worng; 
+	if(numWrong==7)//stop in 7 worng; 
+	{
 	updateScore();
 	win();
-	}*/
-    if(numRight==phraseLength){//to complete all the word
+	}
+    /*if(numRight==phraseLength){//to complete all the word
         updateScore();
-		win();
-		
-    }
+		win();	
+    }*/
 }
 function updateScore()//update score to firebase that game over(per game)
 {
