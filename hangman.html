@@ -11,7 +11,7 @@
 	<script src="https://www.gstatic.com/firebasejs/6.3.4/firebase.js"></script>
     <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
-    <script>window.onload = draw;</script>
+    
 </head>
 
 <body>
@@ -24,7 +24,7 @@
             <p>Select single player or multiplayer to begin!</p>
             <div id="buttonContainer">
                 <div id="sp" onclick="sp()">Single player</div>
-                <div id="mp" onclick="mp()">Multiplayer</div>
+                <div id="mp" onclick="mp()">High Score</div>
                 
             </div>
         </div>
@@ -43,10 +43,10 @@
                     <div id="sports" onclick="sport()">Sports</div>
                 </div>
             </div>
-            <div id="mp1" onclick="mp()">Multiplayer</div>
+            <div id="mp1" onclick="mp()">High Score</div>
         </div>
     </div>
-    <div id="multiPage">
+    <div id="HighScore">
         <div id="wordInput">
             <div id="multiText">
                 <p>The phrase guesser should look away from the screen now.</p>
@@ -66,8 +66,8 @@
         </div>
     </div>
     <div id="gamePage">
-        <p id="categoryName"></p>
-        <p id="scores">score: </p>
+        <div id="categoryName"></div>
+        <div id="scores">score: </div>
         <div id="wordWrap">
             <div id="underline1">
                 <div id="letter1"></div>

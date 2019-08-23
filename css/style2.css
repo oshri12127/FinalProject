@@ -22,12 +22,12 @@ a{
     a:visited{
         color: #b10000;
     }
-body, html, #category, #category1, #category2, #phrases, #movies, #songs, #challenge, #introPage, #introText, #introText p, #sp, #mp, #sp1, #mp1, #multiPage, #singlePage #wordWrap, #wordWrap div, #restriction, #gamePage, #letterBank div, #challengeBank div{
+body, html, #category, #category1, #category2, #phrases, #movies, #songs, #challenge, #introPage, #introText, #introText p, #sp, #mp, #sp1, #mp1, #HighScore, #singlePage #wordWrap, #wordWrap div, #restriction, #gamePage, #letterBank div, #challengeBank div{
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-#introPage, #singlePage, #multiPage, #gamePage{
+#introPage, #singlePage, #HighScore, #gamePage{
     position: absolute;
     top: 0;
     right: 0;
@@ -211,7 +211,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
         -o-box-shadow: 0 10px 30px 0px  #b10000;
         -ms-box-shadow: 0 10px 30px 0px  #b10000;
     }
-#multiPage{
+#HighScore{
     display: none;
     height: 490px;
     width: 845px;
@@ -400,7 +400,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
     }
 
 @media (max-width: 866px){
-    #introPage, #singlePage, #multiPage{
+    #introPage, #singlePage, #HighScore{
         width: 500px;
         height: 500px;
     }
@@ -457,7 +457,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
             font-size: 35px;
             line-height: 80px;
         }
-    #multiPage{
+    #HighScore{
         height: 350px;
     }    
         #wordInput{
@@ -592,7 +592,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
 }
 
 @media (max-width: 500px){
-    #introPage, #singlePage, #multiPage{
+    #introPage, #singlePage, #HighScore{
         height: 100%;
         width: 100%;
         min-width: 365px;
@@ -634,7 +634,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
         #singlePage p{
             font-size: 25px;
         }
-    #multiPage{
+    #HighScore{
         height: 330px;
     }    
         #multiText p{

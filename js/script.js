@@ -11,7 +11,7 @@
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
-  var score = 0;
+  var scorePerGame = 100;
   var rand = 0;
   var word = "";
   var numWrong = 0;
@@ -76,9 +76,9 @@ function sp(){
     refillCategory(sports,"https://opentdb.com/api.php?amount=30&category=21&difficulty=medium&type=multiple");
     refillCategory(music,"https://opentdb.com/api.php?amount=30&category=12&difficulty=medium&type=multiple");
     
-
+	
     document.getElementById('introPage').style.display = "none";
-    document.getElementById('multiPage').style.display = "none";
+    document.getElementById('HighScore').style.display = "none";
     document.getElementById('singlePage').style.display = "block";
 
 }
@@ -86,7 +86,7 @@ function sp(){
 function mp(){
     document.getElementById('introPage').style.display = "none";
     document.getElementById('singlePage').style.display = "none";
-    document.getElementById('multiPage').style.display = "block";
+    document.getElementById('HighScore').style.display = "block";
 }
 
 function out(){
@@ -128,83 +128,15 @@ function sport(){
     hangman(sports);
 }
 
-function challengeGuess(){
-    var target = event.target || event.srcElement;
-    target.style.visibility = "hidden";
-    var lower = target.id;
-    var upper = document.getElementById(lower).getAttribute('value');
-    var results = document.getElementById('results');
-    if(document.getElementById('letter1').innerHTML === upper){
-        document.getElementById('letter1').style.visibility = "visible";
-        numRight++;
-    }
-    if(numRight==0){
-        numWrong++;
-        hang();
-    }
-    if(numRight==1){
-        results.style.visibility = "visible";
-        results.style.color = "red";
-        results.innerHTML = "You lose!";        
-        if(document.getElementById('underline1').offsetWidth == 50){
-            results.style.fontSize = "200px";
-            results.style.height = "200px";
-            results.style.lineHeight = "200px";
-        }
-        if(document.getElementById('underline1').offsetWidth == 28){
-            results.style.marginTop = "20px";
-            results.style.fontSize = "100px";
-            results.style.height = "100px";
-            results.style.lineHeight = "100px";
-        }
-        if(document.getElementById('underline1').offsetWidth == 18){
-            results.style.marginTop = "15px";
-            results.style.fontSize = "75px";
-            results.style.height = "75px";
-            results.style.lineHeight = "75px";
-        }
-        document.getElementById('challengeBank').style.display = "none";
-        document.getElementById('again').style.display = "block";
-        document.getElementById('home').style.display = "block";
-    }
-    if(numWrong==25){
-        results.style.visibility = "visible";
-        results.style.color = "#00b100";
-        results.innerHTML = "You win!";        
-        if(document.getElementById('underline1').offsetWidth == 50){
-            results.style.fontSize = "200px";
-            results.style.height = "200px";
-            results.style.lineHeight = "200px";
-        }
-        if(document.getElementById('underline1').offsetWidth == 28){
-            results.style.marginTop = "20px";
-            results.style.fontSize = "100px";
-            results.style.height = "100px";
-            results.style.lineHeight = "100px";
-        }
-        if(document.getElementById('underline1').offsetWidth == 18){
-            results.style.marginTop = "15px";
-            results.style.fontSize = "75px";
-            results.style.height = "75px";
-            results.style.lineHeight = "75px";
-        }
-        document.getElementById('challengeBank').style.display = "none";
-        document.getElementById('vidSent').style.display = "block";
-        document.getElementById('again').style.display = "block";
-        document.getElementById('home').style.display = "block";
-        document.getElementById('letter1').style.visibility = "visible";
-    }
-}
-
 function countChars(countfrom,displayto) {
     var len = document.getElementById(countfrom).value.length;
     document.getElementById(displayto).innerHTML = len;
 }
-
+/*
 function readText(){
     word = document.getElementById('input').value;
     hangman();
-}
+}*/
 
 function hangman(cat){
     
@@ -259,10 +191,10 @@ function hangman(cat){
         y--;
     }
     phraseLength = word.length - spaces;
-    document.getElementById('multiPage').style.display = "none";
+    document.getElementById('HighScore').style.display = "none";
     document.getElementById('gamePage').style.display = "block";
+	document.getElementById('scores').innerHTML = "score: " +scorePerGame;
     splitWords();
-    document.getElementById('challengeBank').style.display = "none";
     draw();
 }
 
@@ -323,62 +255,6 @@ function draw(){
             ctx.moveTo(150,40);
             ctx.lineTo(150,80);
             ctx.stroke();
-    var cntx = document.getElementById("homeHangman").getContext('2d');
-        cntx.fillStyle = "white";
-        cntx.lineWidth=3;
-        cntx.fillRect(0, 0, 300, 300);
-        cntx.beginPath(); //vertical bar
-            cntx.moveTo(50,270);
-            cntx.lineTo(50,25);
-            cntx.stroke();
-        cntx.beginPath(); //vertical bar long piece
-            cntx.moveTo(65,270);
-            cntx.lineTo(65,85);
-            cntx.stroke();
-        cntx.beginPath(); //vertical bar short piece
-            cntx.moveTo(65,64);
-            cntx.lineTo(65,40);
-            cntx.stroke();
-        cntx.beginPath(); //horizontal bar
-            cntx.moveTo(49,25);
-            cntx.lineTo(175,25);
-            cntx.stroke();
-        cntx.beginPath(); //horizontal bar short piece
-            cntx.moveTo(49,40);
-            cntx.lineTo(86,40);
-            cntx.stroke();
-        cntx.beginPath(); //horizontal bar long piece
-            cntx.moveTo(106,40);
-            cntx.lineTo(175,40);
-            cntx.stroke();
-        cntx.beginPath(); //small vertical bar
-            cntx.moveTo(173,25);
-            cntx.lineTo(173,40);
-            cntx.stroke();
-        cntx.beginPath(); //cross bar
-            cntx.moveTo(50,80);
-            cntx.lineTo(100,25);
-            cntx.stroke();
-        cntx.beginPath(); //cross bar
-            cntx.moveTo(60,90);
-            cntx.lineTo(111,35);
-            cntx.stroke();
-        cntx.beginPath(); //cross bar
-            cntx.moveTo(50,80);
-            cntx.lineTo(60,90);
-            cntx.stroke();
-        cntx.beginPath(); //cross bar
-            cntx.moveTo(100,25);
-            cntx.lineTo(111,35);
-            cntx.stroke();
-        cntx.beginPath(); //ground
-            cntx.moveTo(35,270);
-            cntx.lineTo(265,270);
-            cntx.stroke();
-        cntx.beginPath(); //noose
-            cntx.moveTo(150,40);
-            cntx.lineTo(150,80);
-            cntx.stroke();
 }
 
 function splitWords(){
@@ -423,21 +299,19 @@ function guessLetter(){
     var upper = document.getElementById(lower).getAttribute('value');
     var results = document.getElementById('results');
     var ul1 = document.getElementById('underline1').offsetWidth;
-
     for(a = 1; a < 101; a++){
         if(document.getElementById('letter'+a).innerHTML === upper || document.getElementById('letter'+a).innerHTML === lower){
             document.getElementById('letter'+a).style.visibility = "visible";
             correct++;
             numRight++;
-            score+=100;
-            document.getElementById('scores').innerHTML = score;
+            document.getElementById('scores').innerHTML = scorePerGame;
         }
     }
     if(correct==0){
         numWrong++;
-        score+=-50;
-        if(score < 0) score = 0;
-        document.getElementById('scores').innerHTML = score;
+		if(numWrong<7)
+			scorePerGame+=-10;
+		document.getElementById('scores').innerHTML = "score: " +scorePerGame;
         hang();
     }
     if(numWrong==6){
@@ -462,6 +336,8 @@ function guessLetter(){
         results.style.visibility = "visible";
         document.getElementById('again').style.display = "visible";
         document.getElementById('home').style.display = "visible";
+		scorePerGame=0;
+		document.getElementById('scores').innerHTML = "score: " +scorePerGame;
         if(ul1 == 50){
             results.style.lineHeight = "40px";
         }
@@ -472,11 +348,26 @@ function guessLetter(){
             results.style.lineHeight = "20px";
         }
     }
-    if(numRight==phraseLength){
-        win();
+	/*if(numWrong==7){//stop in 7 worng; 
+	updateScore();
+	win();
+	}*/
+    if(numRight==phraseLength){//to complete all the word
+        updateScore();
+		win();
+		
     }
 }
-
+function updateScore()//update score to firebase that game over(per game)
+{
+	firebase.auth().onAuthStateChanged(function (user){
+		userNow2 = user.uid;
+	var datesRef = firebase.database().ref();
+	datesRef.child(userNow2).set({
+				score:scorePerGame
+	});
+	});
+}
 function win(){
     var ul1 = document.getElementById('underline1').offsetWidth;
     var again = document.getElementById('again');
@@ -624,7 +515,7 @@ function hang(){
             ctx.lineTo(160,98);
             ctx.stroke();
     }
-    if(numWrong==8){
+   /* if(numWrong==8){
         ctx.fillRect(118, 135, 70, 120); //cover body
         ctx.lineWidth=3;
         ctx.beginPath(); //body
@@ -988,7 +879,7 @@ function hang(){
             ctx.moveTo(77,240);
             ctx.lineTo(97,240);
             ctx.stroke();
-    }
+    }*/
 }
 
 function reset(){
@@ -1017,7 +908,7 @@ function reset(){
     for(b = 0; b < 26; b++){
         bank[b].style.visibility = "visible";
     }
-    score = 0;
+    scorePerGame = 100;
     numWrong = 0;
     numRight = 0;
     phraseLength = 0;
