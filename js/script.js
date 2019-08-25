@@ -24,6 +24,7 @@
   var computerScience = [];
   var userNow2;
   var userEmail;
+  var currentQuestion = "";
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -32,21 +33,16 @@ firebase.auth().onAuthStateChanged(function (user) {
         //console.log(user);
         console.log(user.email);
         
-        
-
         var img = document.getElementById('pic');
+        var name = document.getElementById('name');
         img.src = userNow2.photoURL;
+        name.innerHTML = "Hello " + userNow2.displayName;
         if(userNow2.photoURL==null)
-        {
             img.src ="images/ANONYMOUS_USER.png";
-        }
-        
-       
-        
         
     } else {
         window.location.href = "index.html"
-        console.log("not loging");
+        
     }
 });
 
@@ -70,6 +66,7 @@ function refillCategory(cat,api){
     
 }
 
+
 function sp(){
     refillCategory(movies,"https://opentdb.com/api.php?amount=30&category=11&difficulty=medium&type=multiple");
     refillCategory(computerScience,"https://opentdb.com/api.php?amount=30&category=18&difficulty=medium&type=multiple");
@@ -92,10 +89,9 @@ function mp(){
 function out(){
 
      firebase.auth().signOut().then(function () {
-                alert("Sign-out successful.");
                 window.location.href = "index.html";
             }).catch(function (error) {
-                console.log(error);
+                alert("Could not logout!");
             });
             
 }
@@ -138,10 +134,22 @@ function readText(){
     hangman();
 }*/
 
+function clu(obj){
+
+    if(obj.value != "hide"){
+    if(scorePerGame!=0)scorePerGame -= 20;
+    document.getElementById('scores').innerHTML = "score: " +scorePerGame;
+    document.getElementById('clue').innerHTML =  currentQuestion;
+    }
+    obj.value = "hide";
+
+}
+
 function hangman(cat){
     
     rand = Math.floor(Math.random()*cat.length);
     word = cat[rand].correct_answer;
+    currentQuestion = cat[rand].question;
     var x = word.length;
     var y = x-1;
     var spaces = 0;
@@ -193,7 +201,7 @@ function hangman(cat){
     phraseLength = word.length - spaces;
     document.getElementById('HighScore').style.display = "none";
     document.getElementById('gamePage').style.display = "block";
-	document.getElementById('scores').innerHTML = "score: " +scorePerGame;
+	document.getElementById('scores').innerHTML = "score: " + scorePerGame;
     splitWords();
     draw();
 }
@@ -331,13 +339,20 @@ function guessLetter(){
             results.style.fontSize = "20px";
         }
     }
-    if(numWrong==7){
-        results.innerHTML = "You lost!";
-        results.style.visibility = "visible";
-        document.getElementById('again').style.display = "visible";
-        document.getElementById('home').style.display = "visible";
-		scorePerGame=0;
+    if(numWrong==7)//stop in 7 worng;
+	{
+        scorePerGame=0;
 		document.getElementById('scores').innerHTML = "score: " +scorePerGame;
+		results.innerHTML = "You lost!";
+        var ul1 = document.getElementById('underline1').offsetWidth;
+        var again = document.getElementById('again');
+        var results = document.getElementById('results');
+        results.style.visibility = "visible";
+        results.style.color = "red";
+        document.getElementById('letterBank').style.display = "none";
+        again.style.display = "block";
+        document.getElementById('home').style.display = "block";
+		
         if(ul1 == 50){
             results.style.lineHeight = "40px";
         }
@@ -347,53 +362,38 @@ function guessLetter(){
         if(ul1 == 18){
             results.style.lineHeight = "20px";
         }
+		updateScore();
     }
-	if(numWrong==7)//stop in 7 worng; 
+	/*if(numWrong==7)//stop in 7 worng; 
 	{
-	updateScore();
-	win();
-	}
-    /*if(numRight==phraseLength){//to complete all the word
+	//updateScore();
+	//reset();
+	}*/
+    if(numRight==phraseLength){//to complete all the word
         updateScore();
 		win();	
-    }*/
+    }
 }
 function updateScore()//update score to firebase that game over(per game)
 {
 	firebase.auth().onAuthStateChanged(function (user){
 		userNow2 = user.uid;
-	var datesRef = firebase.database().ref();
-	datesRef.child(userNow2).set({
-				score:scorePerGame
-	});
+    var datesRef = firebase.database().ref();
+	
+	datesRef.child(userNow2).child('score').transaction(function(score){
+				return score+scorePerGame;
+    });
+
+    console.log();
 	});
 }
 function win(){
     var ul1 = document.getElementById('underline1').offsetWidth;
     var again = document.getElementById('again');
     var results = document.getElementById('results');
-    results.style.visibility = "visible";
-        results.style.color = "#00b100";
-    if(numWrong > 6){
-        results.innerHTML = "It's about time you figured it out...";
-        document.getElementById('letterBank').style.display = "none";
-        again.style.display = "block";
-        document.getElementById('home').style.display = "block";
-        if(ul1 == 50){
-            results.style.lineHeight = "70px";
-            results.style.fontSize = "30px";
-        }
-        if(ul1 == 28){
-            results.style.lineHeight = "50px";
-            results.style.fontSize = "25px";
-        }
-        if(ul1 == 18){
-            results.style.lineHeight = "40px";
-            results.style.fontSize = "20px";
-        }
-    }
-    else{
+        results.style.color = "green";
         results.innerHTML = "You won!";
+        results.style.visibility = "visible";
         document.getElementById('letterBank').style.display = "none";
         again.style.display = "block";
         document.getElementById('home').style.display = "block";
@@ -412,9 +412,9 @@ function win(){
             results.style.marginTop = "15px";
             results.style.fontSize = "75px";
         }
+       
     }
 
-}
 
 function hang(){
     var ctx = document.getElementById("hangman").getContext('2d');
@@ -919,6 +919,10 @@ function reset(){
     document.getElementById('letterBank').style.display = "block";
     again.style.marginTop = "0px";
     again.style.display = "none";
+    
+    document.getElementById('clue').value = "not hidden";
+    document.getElementById('clue').innerHTML = "Hint";
+    document.getElementById('clue').style.display = "visible";
     document.getElementById('home').style.display = "none";
 
     if(computerScience[rand].correct_answer == word){

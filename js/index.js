@@ -13,7 +13,7 @@
   firebase.initializeApp(firebaseConfig);
 
 
-	$(document).ready(function(){
+  $(document).ready(function(){
 		var state = "login";
 		
 		$("#signup").click(function(){
@@ -29,8 +29,8 @@
 		
 		$("form").submit(function(e){
 			e.preventDefault(); // so it wouldn't use form functionality
-			let email = $("#email").val();
-			let pass = $("#pass").val();
+			let email = document.querySelector("#email").value;
+			let pass = document.querySelector("#pass").value;
 			if(state === "login"){
 				firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
 					alert('Email or Password incorrect!!');

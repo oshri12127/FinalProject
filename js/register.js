@@ -27,7 +27,7 @@
     }
   //Submit form(1.2)
   function formSubmit(e) {
-
+    document.querySelector('.congrats').style.display = 'none';
     e.preventDefault();
     // Get Values from the DOM
     let name = document.querySelector('#name').value;
@@ -47,15 +47,13 @@
         
       })
       .catch(console.error);
+   
       firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-      $("#loginMessage").text(errorMessage);
+        
+        alert("Registration Failed!\nPassword must be at least 6 characters.");
+        window.location.reload();
     });
-      document.querySelector('.congrats').style.display = 'block'
       
-  
     demo();
  
   }
@@ -78,11 +76,15 @@ user.updateProfile({
 
   }
   function sleep(ms) {
+
     return new Promise(resolve => setTimeout(resolve, ms));
   }
   
   async function demo() {
-    await sleep(7000);
+    
+    await sleep(3000);
+    document.querySelector('.congrats').style.display = 'block';
+    await sleep(3000);
     location.href = "hangman.html";
     
   }
