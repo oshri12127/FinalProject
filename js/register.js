@@ -53,7 +53,7 @@
         alert("Registration Failed!\nPassword must be at least 6 characters.");
         window.location.reload();
     });
-      
+    resetScore();
     demo();
  
   }
@@ -88,5 +88,17 @@ user.updateProfile({
     location.href = "hangman.html";
     
   }
+  var userNow2;
+  function resetScore()
+{
+	var point0=0;
+	firebase.auth().onAuthStateChanged(function (user){
+		userNow2 = user.uid;
+    var datesRef = firebase.database().ref();
+	datesRef.child(userNow2).set({
+				score: point0
+    });
+	});
+}
   
   

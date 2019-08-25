@@ -31,7 +31,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         userEmail = user.email;
         userNow2 = user;
         //console.log(user);
-        console.log(user.email);
+        //console.log(user.email);
         
         var img = document.getElementById('pic');
         var name = document.getElementById('name');
@@ -312,7 +312,7 @@ function guessLetter(){
             document.getElementById('letter'+a).style.visibility = "visible";
             correct++;
             numRight++;
-            document.getElementById('scores').innerHTML = scorePerGame;
+            document.getElementById('scores').innerHTML = "score: " +scorePerGame;
         }
     }
     if(correct==0){
