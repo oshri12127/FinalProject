@@ -213,13 +213,21 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
     }
 #HighScore{
     display: none;
-    height: 490px;
-    width: 845px;
-}    
+    
+    width: 1050px;
+} 
+#HighScoreP{
+		width: 1050px;
+        font-size: 70px;
+        margin: 0px auto 40px auto;
+        text-align: center;
+    }   
     #wordInput{
         width: 845px;
         height: 350px;
         margin: 0px auto;
+		float: left;
+
     }
     #multiText p{
         font-size: 29px;
@@ -240,10 +248,11 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
         font-size: 15px;
     }
     #characterCount{
-        width: 580px;
-        height: 35px;
+        
+        height: 60px;
         margin: 21px auto 0 auto;
-        font-size: 25px;
+        font-size: 40px;
+		float: right;
     }
     #charContain{
         margin: 0;
@@ -273,8 +282,17 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
         cursor: pointer;
     }
     
-
-    #clue{
+	 #pic{
+            width: 75px;
+            height: 75px;
+            
+        }
+#gamePage{
+    display: none;
+    text-align: center;
+    width: 1000px;
+}
+#clue{
         width: 20%;
         margin: 70px 30px auto auto;
         font-size: 20px;
@@ -285,28 +303,19 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
         border-radius: 25px;
         cursor: pointer;
     }
-
-
-
-	 #pic{
-            width: 75px;
-            height: 75px;
-            
-        }
-#gamePage{
-    display: none;
-    text-align: center;
-}
     #categoryName{
         width: 100%;
         margin: 20px auto 0px auto;
         font-size: 75px;
+		display: inline-block;
     }    
     #scores{
         width: 100%;
         margin: 70px auto 0px auto;
         font-size: 75px;
+		display: inline-block;
     } 
+	
     #wordWrap{
         display: inline-block;
         width: 830px;
@@ -391,29 +400,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
     text-align: center;
 }
 
-    #vidHead, #vidCaption{
-        margin: 20px auto 10px auto;
-        font-size: 60px;
-        text-align: center;
-    }
-    #vidCaption{
-        margin-top: 10px;
-        font-size: 25px;
-    }
-    #video, #videoTab, #videoMob{
-        display: block;
-        margin: 0 auto;
-    }
-    #videoTab, #videoMob{
-        display: none;
-    }
-    #vidLink{
-        color: #b10000;
-    }
-    #vidLink:hover{
-        text-decoration: underline;
-        cursor: pointer;
-    }
+    
 
 @media (max-width: 866px){
     #introPage, #singlePage, #HighScore{
@@ -492,10 +479,11 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
             font-size: 12px;
         }
         #characterCount{
-            width: 500px;
+            
             height: 30px;
             margin: 15px auto 0 auto;
             font-size: 20px;
+			float: right;
         }
         #submit{
             font-size: 25px;
@@ -666,9 +654,10 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
             font-size: 10px;
         }
         #characterCount{
-            width: 90%;
+            
             height: 25px;
             font-size: 15px;
+			float: right;
         }
         #submit{
             font-size: 20px;
@@ -739,26 +728,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
             font-size: 26px;
             line-height: 45px;
         }
-        #vidSent{
-            margin-bottom: 30px;
-            font-size: 16px;
-        }
-   
-        #vidHead, #vidCaption{
-            margin: 0 auto 10px auto;
-            font-size: 30px;
-            text-align: center;
-        }
-        #vidCaption{
-            margin-top: 10px;
-            font-size: 13px;
-        }
-        #video, #videoTab, #videoMob{
-            display: block;
-        }
-        #video, #videoTab{
-            display: none;
-        }
+       
 }
 
 @media (max-width: 450px){
@@ -767,4 +737,77 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
         bottom: 15px;
         font-size: 10px;
     }
+}
+
+.center {
+  position: absolute;
+  top: 53%;
+  left: 25%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 10;
+  
+}
+
+.list {
+  padding-left: 2rem;
+  margin: 0 auto;
+}
+.list .item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: white;
+  height: 3rem;
+  width: 500px;
+  border-radius: 4rem;
+  margin-bottom: 2rem;
+  background: #f1c224;
+  -webkit-transform-origin: left;
+          transform-origin: left;
+  transition: -webkit-transform 200ms ease-in-out;
+  transition: transform 200ms ease-in-out;
+  transition: transform 200ms ease-in-out, -webkit-transform 200ms ease-in-out;
+  box-shadow: 0 0 4rem 0 rgba(0, 0, 0, 0.1), 0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
+}
+.list .item .pos {
+  font-weight: 900;
+  position: absolute;
+  left: -2rem;
+  text-align: center;
+  font-size: 1.25rem;
+  width: 1.5rem;
+  color: black;
+  opacity: 0.6;
+  transition: opacity 200ms ease-in-out;
+}
+.list .item .pic {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin-right: 1rem;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2), 0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
+}
+.list .item .name {
+  flex-grow: 2;
+  flex-basis: 10rem;
+  font-size: 1.3rem;
+}
+.list .item .score {
+  margin-right: 1.5rem;
+  opacity: 1.0;
+}
+.list .item .score:after {
+  margin-right: 1rem;
+  content: 'points';
+  opacity: 1.0;
+}
+.list .item:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+.list .item:hover .pos {
+  opacity: 0.8;
 }

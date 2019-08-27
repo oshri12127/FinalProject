@@ -1,7 +1,4 @@
 
-
-
-  // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyDw_tDZu1yNEh3FsAq-3mAVmMi4ECAgME8",
     authDomain: "finalprojectweb-6ea4b.firebaseapp.com",
@@ -18,30 +15,31 @@
   let formMessage = firebase.database().ref('register');
 
   //listen for submit event//(1)
-  document
-    .getElementById('registrationform')
+ 
+  document.getElementById('registrationform')
     .addEventListener('submit', formSubmit);
 
-    function formBack(e) {
-    location.href = "index.html";
-    }
+  function formback() {window.location.href = "index.html";}
+   
   //Submit form(1.2)
   function formSubmit(e) {
     document.querySelector('.congrats').style.display = 'none';
     e.preventDefault();
-    // Get Values from the DOM
+  
     let name = document.querySelector('#name').value;
     let email = document.querySelector('#email').value;
     let password = document.querySelector('#password').value;
     const ref = firebase.storage().ref();
     const file = document.querySelector('#cameraInput').files[0]
     const fname = (+new Date()) + '-' + file.name;
+    
     const metadata = {
       contentType: file.type
     };
+
     const task = ref.child(fname).put(file, metadata);
-    task
-      .then(snapshot => snapshot.ref.getDownloadURL())
+    
+    task.then(snapshot => snapshot.ref.getDownloadURL())
       .then((url) => {
         updateData(name,url);
         
@@ -53,7 +51,7 @@
         alert("Registration Failed!\nPassword must be at least 6 characters.");
         window.location.reload();
     });
-    resetScore();
+    resetScore(); 
     demo();
  
   }
@@ -63,32 +61,30 @@
   
   function updateData(name,url) {
       
-  var user = firebase.auth().currentUser;
+    var user = firebase.auth().currentUser;
 
-user.updateProfile({
-  displayName: name,
-  photoURL: url
-}).then(function() {
-  // Update successful.
-}).catch(function(error) {
-  // An error happened.
-});
+    user.updateProfile({
+      displayName: name,
+      photoURL: url
+    }).then(function() {
+      // Update successful.
+    }).catch(function(error) {
+      // An error happened.
+    });
 
   }
-  function sleep(ms) {
 
+  function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
   
   async function demo() {
-    
     await sleep(3000);
     document.querySelector('.congrats').style.display = 'block';
     await sleep(3000);
     location.href = "hangman.html";
-    
   }
-  var userNow2;
+    var userNow2;
   function resetScore()
 {
 	var point0=0;

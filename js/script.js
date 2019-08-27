@@ -84,6 +84,7 @@ function mp(){
     document.getElementById('introPage').style.display = "none";
     document.getElementById('singlePage').style.display = "none";
     document.getElementById('HighScore').style.display = "block";
+	YourPoints();
 }
 
 function out(){
@@ -133,7 +134,18 @@ function readText(){
     word = document.getElementById('input').value;
     hangman();
 }*/
-
+function YourPoints(){
+	firebase.auth().onAuthStateChanged(function (user){
+		userNow2 = user.uid;
+    var datesRef = firebase.database().ref();
+	
+	return datesRef.child(userNow2).once('value').then(function(snapshot) {
+  var points = snapshot.val().score;
+  document.getElementById('characterCount').innerHTML = "your points: " +points;
+});
+});
+	
+}
 function clu(obj){
 
     if(obj.value != "hide"){
