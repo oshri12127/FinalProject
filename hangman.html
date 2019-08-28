@@ -21,10 +21,10 @@
 
         <div id="introText">
             <p>Hangman Game</p>
-            <p>Select single player or multiplayer to begin!</p>
+            <p>Select single player to begin!</p>
             <div id="buttonContainer">
                 <div id="sp" onclick="sp()">Single player</div>
-                <div id="mp" onclick="mp()">High Score</div>
+                <div id="mp" onclick="hs()">High Score</div>
             </div>
         </div>
         
@@ -42,80 +42,62 @@
                     <div id="sports" onclick="sport()">Sports</div>
                 </div>
             </div>
-            <div id="mp1" onclick="mp()">High Score</div>
+           
+            <div id="sp1" onclick="window.location.reload()">Main Menu</div>
         </div>
     </div>
     <div id="HighScore">
 	<div id="HighScoreP">Leaderboard</div>
 	<div id="characterCount">your points:</div>        
     <div id="wordInput">
-	<div class="center">     
+	     
   <div class="list">
     <div class="item">
       <div class="pos">
         1
       </div>
-      <div class="pic" style="background-image: url(&#39;images/ANONYMOUS_USER.png&#39;)"></div>
-      <div class="name">
-        Clayton Watson
-      </div>
-      <div class="score">
-        0
-      </div>
+      <div> <img id="picH0"  src="images/ANONYMOUS_USER.png" alt="IMG" ></div>
+      <div id="name0">----</div>
+      <div id="score0">---- </div>
     </div>
     <div class="item">
       <div class="pos">
         2
       </div>
-      <div class="pic" style="background-image: url(&#39;images/ANONYMOUS_USER.png&#39;)"></div>
-      <div class="name">
-        Debbie Lane
-      </div>
-      <div class="score">
-        0
-      </div>
+      <div> <img id="picH1"  src="images/ANONYMOUS_USER.png" alt="IMG" ></div>
+      <div id="name1">----</div>
+      <div id="score1">---- </div>
     </div>
     <div class="item">
       <div class="pos">
         3
       </div>
-      <div class="pic" style="background-image: url(&#39;images/ANONYMOUS_USER.png&#39;)"></div>
-      <div class="name">
-        Gabriella Steward
-      </div>
-      <div class="score">
-        0
-      </div>
+      <div> <img id="picH2"  src="images/ANONYMOUS_USER.png" alt="IMG" ></div>
+      <div id="name2">----</div>
+      <div id="score2">---- </div>
     </div>
     <div class="item">
       <div class="pos">
         4
       </div>
-      <div class="pic" style="background-image: url(&#39;images/ANONYMOUS_USER.png&#39;)"></div>
-      <div class="name">
-        Nina Perkins
-      </div>
-      <div class="score">
-        0
-      </div>
+      <div> <img id="picH3"  src="images/ANONYMOUS_USER.png" alt="IMG" ></div>
+      <div id="name3">----</div>
+      <div id="score3">---- </div>
     </div>
     <div class="item">
       <div class="pos">
         5
       </div>
-      <div class="pic" style="background-image: url(&#39;images/ANONYMOUS_USER.png&#39;)"></div>
-      <div class="name">
-        Dennis Henry
-      </div>
-      <div class="score">
-        0
-      </div>
+      <div> <img id="picH4"  src="images/ANONYMOUS_USER.png" alt="IMG" ></div>
+      <div id="name4">----</div>
+      <div id="score4">---- </div>
     </div>
     
   </div>
-</div>
+
     </div>
-		<div id="sp1" onclick="sp()">Single player</div>
+        <div id="sp1" onclick="window.location.reload()">Main Menu</div>
+       
     </div>
     <div id="gamePage">
         <div id="categoryName"></div>
