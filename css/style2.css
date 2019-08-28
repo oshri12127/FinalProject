@@ -22,12 +22,12 @@ a{
     a:visited{
         color: #b10000;
     }
-body, html, #category, #category1, #category2, #phrases, #movies, #songs, #challenge, #introPage, #introText, #introText p, #sp, #mp, #sp1, #mp1, #HighScore, #singlePage #wordWrap, #wordWrap div, #restriction, #gamePage, #letterBank div, #challengeBank div{
+body, html, #category, #category1, #category2, #phrases, #movies, #songs, #challenge, #introPage, #introText, #introText p, #sp, #mp, #sp1, #mp1, #HighScore, #singlePage #wordWrap, #wordWrap div, #restriction, #gamePage, #letterBank div, #challengeBank div,#multiplayer{
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-#introPage, #singlePage, #HighScore, #gamePage{
+#introPage, #singlePage, #HighScore, #gamePage,#multiplayer{
     position: absolute;
     top: 0;
     right: 0;
@@ -222,13 +222,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
         margin: 0px auto 40px auto;
         text-align: center;
     }   
-    #wordInput{
-        width: 845px;
-        height: 350px;
-        margin: 0px auto;
-		float: left;
-
-    }
+    
     #multiText p{
         font-size: 29px;
     }
@@ -292,6 +286,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
     text-align: center;
     width: 1000px;
 }
+
 #clue{
         width: 20%;
         margin: 70px 30px auto auto;
@@ -391,21 +386,93 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
     #home1{
         margin-top: 32px;
     }
-    #vidSent{
-        display: none;
-        margin-bottom: 100px;
-        font-size: 30px;
-    }
+   
 #challengeGame{
     text-align: center;
 }
+#wordInput{
+        width: 845px;
+        height: 415px;
+        margin: -40px auto;
+		float: left;
+		
 
+    }
+
+.list {
+  padding-left: 2rem;
+  margin: 0 auto;
+}
+.list .item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: white;
+  height: 3rem;
+  width: 500px;
+  border-radius: 4rem;
+  margin-bottom: 2rem;
+  background: #f1c224;
+  -webkit-transform-origin: left;
+          transform-origin: left;
+  
+  transition: -webkit-transform 200ms ease-in-out;
+  transition: transform 200ms ease-in-out;
+  transition: transform 200ms ease-in-out, -webkit-transform 200ms ease-in-out;
+  box-shadow: 0 0 4rem 0 rgba(0, 0, 0, 0.1), 0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
+}
+.list .item .pos {
+  font-weight: 900;
+  position: absolute;
+  left: -2rem;
+  text-align: center;
+  font-size: 1.25rem;
+  width: 1.5rem;
+  color: black;
+  opacity: 0.6;
+  transition: opacity 200ms ease-in-out;
+}
+.list .item.pic,#picH0,#picH1,#picH2,#picH3,#picH4 {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin-right: 1rem;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2), 0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
+}
+.list .item .name ,#name0,#name1,#name2,#name3,#name4{
+  flex-grow: 2;
+  flex-basis: 10rem;
+  font-size: 1.3rem;
+}
+.list .item .score ,#score0,#score1,#score2,#score3,#score4{
+  margin-right: 1.5rem;
+  opacity: 1.0;
+}
+.list .item .score:after,#score0:after,#score1:after,#score2:after,#score3:after,#score4:after {
+  margin-right: 1rem;
+  content: 'points';
+  opacity: 1.0;
+}
+.list .item:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+.list .item:hover .pos {
+  opacity: 0.8;
+}
     
 
 @media (max-width: 866px){
     #introPage, #singlePage, #HighScore{
         width: 500px;
         height: 500px;
+    }
+	#HighScoreP{
+		width: 500px;
+        font-size: 50px;
+        
     }
         #introText{
             width: 500px;
@@ -466,6 +533,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
         #wordInput{
             height: 250px;
             width: 100%;
+			margin: 0px auto;
         }
         #multiText p{
             font-size: 17.6px;
@@ -570,29 +638,33 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
         #home{
             margin-top: 0px;
         }
-        #vidSent{
-            margin-bottom: 50px;
-            font-size: 25px;
-        }
+        
     #challengeGame{
         text-align: center;
     }
-   
-        #vidHead, #vidCaption{
-            margin: 0 auto 10px auto;
-            font-size: 30px;
-            text-align: center;
-        }
-        #vidCaption{
-            margin-top: 10px;
-            font-size: 15px;
-        }
-        #video, #videoTab, #videoMob{
-            display: block;
-        }
-        #video, #videoMob{
-            display: none;
-        }
+.list {
+  height:250px
+  
+}
+.list .item {
+  
+  height: 1.5rem;
+  width:290px
+ 
+}
+.list .item .pos {
+  font-size: 1.25rem;
+  width: 1.5rem;
+
+}
+.list .item.pic,#picH0,#picH1,#picH2,#picH3,#picH4 {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.list .item .name ,#name0,#name1,#name2,#name3,#name4{
+  font-size: 1.3rem;
+}
+        
 }
 
 @media (max-width: 500px){
@@ -600,6 +672,11 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
         height: 100%;
         width: 100%;
         min-width: 365px;
+    }
+	#HighScoreP{
+		width: 500px;
+        font-size: 30px;
+        
     }
 
         #introText{
@@ -676,7 +753,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
             height: 20px;
             
         }
-    #gamePage{
+    #gamePage,#multiplayer{
         min-width: 365px;
     }
         #categoryName{
@@ -686,6 +763,7 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
             width: 320px;
             margin-top: 10px;
             padding: 0px;
+			margin: 0px auto;
         }
         #letter1, #letter2, #letter3, #letter4, #letter5, #letter6, #letter7, #letter8, #letter9, #letter10, #letter11, #letter12, #letter13, #letter14, #letter15, #letter16, #letter17, #letter18, #letter19, #letter20, #letter21, #letter22, #letter23, #letter24, #letter25, #letter26, #letter27, #letter28, #letter29, #letter30, #letter31, #letter32, #letter33, #letter34, #letter35, #letter36, #letter37, #letter38, #letter39, #letter40, #letter41, #letter42, #letter43, #letter44, #letter45, #letter46, #letter47, #letter48, #letter49, #letter50, #letter51, #letter52, #letter53, #letter54, #letter55, #letter56, #letter57, #letter58, #letter59, #letter60, #letter61, #letter62, #letter63, #letter64, #letter65, #letter66, #letter67, #letter68, #letter69, #letter70, #letter71, #letter72, #letter73, #letter74, #letter75, #letter76, #letter77, #letter78, #letter79, #letter80, #letter81, #letter82, #letter83, #letter84, #letter85, #letter86, #letter87, #letter88, #letter89, #letter90, #letter91, #letter92, #letter93, #letter94, #letter95, #letter96, #letter97, #letter98, #letter99, #letter100{
             width: 18px;
@@ -728,6 +806,28 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
             font-size: 26px;
             line-height: 45px;
         }
+		.list {
+  height:200px
+  
+}
+.list .item {
+  
+  height: 0.6rem;
+  width:190px
+ 
+}
+.list .item .pos {
+  font-size: 1.0rem;
+  width: 1.0rem;
+
+}
+.list .item.pic,#picH0,#picH1,#picH2,#picH3,#picH4 {
+  width: 1rem;
+  height: 1rem;
+}
+.list .item .name ,#name0,#name1,#name2,#name3,#name4{
+  font-size: 0.9rem;
+}
        
 }
 
@@ -739,75 +839,3 @@ body, html, #category, #category1, #category2, #phrases, #movies, #songs, #chall
     }
 }
 
-.center {
-  position: absolute;
-  top: 53%;
-  left: 25%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  z-index: 10;
-  
-}
-
-.list {
-  padding-left: 2rem;
-  margin: 0 auto;
-}
-.list .item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  background: white;
-  height: 3rem;
-  width: 500px;
-  border-radius: 4rem;
-  margin-bottom: 2rem;
-  background: #f1c224;
-  -webkit-transform-origin: left;
-          transform-origin: left;
-  transition: -webkit-transform 200ms ease-in-out;
-  transition: transform 200ms ease-in-out;
-  transition: transform 200ms ease-in-out, -webkit-transform 200ms ease-in-out;
-  box-shadow: 0 0 4rem 0 rgba(0, 0, 0, 0.1), 0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
-}
-.list .item .pos {
-  font-weight: 900;
-  position: absolute;
-  left: -2rem;
-  text-align: center;
-  font-size: 1.25rem;
-  width: 1.5rem;
-  color: black;
-  opacity: 0.6;
-  transition: opacity 200ms ease-in-out;
-}
-.list .item .pic {
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  background-size: cover;
-  background-position: center;
-  margin-right: 1rem;
-  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2), 0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
-}
-.list .item .name {
-  flex-grow: 2;
-  flex-basis: 10rem;
-  font-size: 1.3rem;
-}
-.list .item .score {
-  margin-right: 1.5rem;
-  opacity: 1.0;
-}
-.list .item .score:after {
-  margin-right: 1rem;
-  content: 'points';
-  opacity: 1.0;
-}
-.list .item:hover {
-  -webkit-transform: scale(1.05);
-          transform: scale(1.05);
-}
-.list .item:hover .pos {
-  opacity: 0.8;
-}
