@@ -25,14 +25,11 @@
   var userNow2;
   var userEmail;
   var currentQuestion = "";
+  var keys = [];
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-        userEmail = user.email;
         userNow2 = user;
-        //console.log(user);
-        //console.log(user.email);
-        
         var img = document.getElementById('pic');
         var name = document.getElementById('name');
         img.src = userNow2.photoURL;
@@ -79,12 +76,41 @@ function sp(){
     document.getElementById('singlePage').style.display = "block";
 
 }
+function hs(){
 
-function mp(){
     document.getElementById('introPage').style.display = "none";
     document.getElementById('singlePage').style.display = "none";
     document.getElementById('HighScore').style.display = "block";
-	YourPoints();
+    sortScors();
+    YourPoints();
+
+}
+
+
+function sortScors(){
+    
+    
+    var ref = firebase.database().ref();
+    ref.once('value',function(snap) {
+    snap.forEach(function(item) {
+        var itemVal = item.val();
+        keys.push(itemVal);
+        
+    });
+    keys.sort((a,b) => (a.data.score<b.data.score) ? 1:-1);
+    for(var i = 0;i<keys.length;i++){
+        var img = document.getElementById('picH' + i);
+        var name = document.getElementById('name' + i);
+        var scor = document.getElementById('score' + i);
+        img.src = keys[i].data.photoURL;
+        scor.innerHTML = keys[i].data.score + " ";
+        name.innerHTML = keys[i].data.username;
+        
+    }
+
+    
+    
+});
 }
 
 function out(){
@@ -129,19 +155,15 @@ function countChars(countfrom,displayto) {
     var len = document.getElementById(countfrom).value.length;
     document.getElementById(displayto).innerHTML = len;
 }
-/*
-function readText(){
-    word = document.getElementById('input').value;
-    hangman();
-}*/
+
 function YourPoints(){
 	firebase.auth().onAuthStateChanged(function (user){
 		userNow2 = user.uid;
     var datesRef = firebase.database().ref();
 	
-	return datesRef.child(userNow2).once('value').then(function(snapshot) {
-  var points = snapshot.val().score;
-  document.getElementById('characterCount').innerHTML = "your points: " +points;
+	return datesRef.child(userNow2).child('data').once('value').then(function(snapshot) {
+  var points = snapshot.child('score').val();
+  document.getElementById('characterCount').innerHTML = "your points: " + points;
 });
 });
 	
@@ -150,7 +172,7 @@ function clu(obj){
 
     if(obj.value != "hide"){
     if(scorePerGame!=0)scorePerGame -= 20;
-    document.getElementById('scores').innerHTML = "score: " +scorePerGame;
+    document.getElementById('scores').innerHTML = "score: " + scorePerGame;
     document.getElementById('clue').innerHTML =  currentQuestion;
     }
     obj.value = "hide";
@@ -376,11 +398,7 @@ function guessLetter(){
         }
 		updateScore();
     }
-	/*if(numWrong==7)//stop in 7 worng; 
-	{
-	//updateScore();
-	//reset();
-	}*/
+	
     if(numRight==phraseLength){//to complete all the word
         updateScore();
 		win();	
@@ -392,7 +410,7 @@ function updateScore()//update score to firebase that game over(per game)
 		userNow2 = user.uid;
     var datesRef = firebase.database().ref();
 	
-	datesRef.child(userNow2).child('score').transaction(function(score){
+	datesRef.child(userNow2).child('data').child('score').transaction(function(score){
 				return score+scorePerGame;
     });
 
@@ -527,371 +545,7 @@ function hang(){
             ctx.lineTo(160,98);
             ctx.stroke();
     }
-   /* if(numWrong==8){
-        ctx.fillRect(118, 135, 70, 120); //cover body
-        ctx.lineWidth=3;
-        ctx.beginPath(); //body
-            ctx.moveTo(150,150);
-            ctx.lineTo(150,220);
-            ctx.stroke();
-        ctx.beginPath(); //right arm
-            ctx.moveTo(150,165);
-            ctx.lineTo(180,180);
-            ctx.stroke();
-        ctx.beginPath(); //left arm
-            ctx.moveTo(150,165);
-            ctx.lineTo(120,180);
-            ctx.stroke();
-        ctx.beginPath(); //right leg
-            ctx.moveTo(149,218);
-            ctx.lineTo(180,260);
-            ctx.stroke();
-        ctx.beginPath(); //left leg
-            ctx.moveTo(151,218);
-            ctx.lineTo(120,260);
-            ctx.stroke();
-    }
-    if(numWrong==9){
-        ctx.fillRect(118, 143, 70, 120); //cover body
-        ctx.lineWidth=3;
-        ctx.beginPath(); //body
-            ctx.moveTo(150,165);
-            ctx.lineTo(150,235);
-            ctx.stroke();
-        ctx.beginPath(); //right arm
-            ctx.moveTo(150,180);
-            ctx.lineTo(180,195);
-            ctx.stroke();
-        ctx.beginPath(); //left arm
-            ctx.moveTo(150,180);
-            ctx.lineTo(120,195);
-            ctx.stroke();
-        ctx.beginPath(); //right leg
-            ctx.moveTo(149,232);
-            ctx.lineTo(180,270);
-            ctx.stroke();
-        ctx.beginPath(); //left leg
-            ctx.moveTo(151,232);
-            ctx.lineTo(120,270);
-            ctx.stroke();
-    }
-    if(numWrong==10){
-        ctx.fillRect(118, 148, 70, 120); //cover body
-        ctx.lineWidth=3;
-        ctx.beginPath(); //body
-            ctx.moveTo(150,180);
-            ctx.lineTo(150,250);
-            ctx.stroke();
-        ctx.beginPath(); //right arm
-            ctx.moveTo(150,195);
-            ctx.lineTo(180,210);
-            ctx.stroke();
-        ctx.beginPath(); //left arm
-            ctx.moveTo(150,195);
-            ctx.lineTo(120,210);
-            ctx.stroke();
-        ctx.beginPath(); //right leg
-            ctx.moveTo(149,247);
-            ctx.lineTo(200,270);
-            ctx.stroke();
-        ctx.beginPath(); //left leg
-            ctx.moveTo(151,247);
-            ctx.lineTo(100,270);
-            ctx.stroke();
-    }
-    if(numWrong==11){
-        ctx.fillRect(90, 148, 120, 120); //cover body
-        ctx.lineWidth=3;
-        ctx.beginPath(); //body
-            ctx.moveTo(200,195);
-            ctx.lineTo(150,268);
-            ctx.stroke();
-        ctx.beginPath(); //right arm
-            ctx.moveTo(191,210);
-            ctx.lineTo(220,245);
-            ctx.stroke();
-        ctx.beginPath(); //left arm
-            ctx.moveTo(191,210);
-            ctx.lineTo(145,237);
-            ctx.stroke();
-        ctx.beginPath(); //right leg
-            ctx.moveTo(149,268);
-            ctx.lineTo(210,268);
-            ctx.stroke();
-        ctx.beginPath(); //left leg
-            ctx.moveTo(151,268);
-            ctx.lineTo(90,268);
-            ctx.stroke();
-    }
-    if(numWrong==12){
-        ctx.fillRect(90, 145, 140, 120); //cover body
-        ctx.lineWidth=3;
-        ctx.beginPath(); //body
-            ctx.moveTo(230,220);
-            ctx.lineTo(150,268);
-            ctx.stroke();
-        ctx.beginPath(); //right arm
-            ctx.moveTo(212,230);
-            ctx.lineTo(240,255);
-            ctx.stroke();
-        ctx.beginPath(); //left arm
-            ctx.moveTo(212,230);
-            ctx.lineTo(165,237);
-            ctx.stroke();
-    }
-    if(numWrong==13){
-        ctx.fillRect(90, 145, 160, 120); //cover body
-        ctx.lineWidth=3;
-        ctx.beginPath(); //body
-            ctx.moveTo(245,255);
-            ctx.lineTo(150,268);
-            ctx.stroke();
-        ctx.beginPath(); //right arm
-            ctx.moveTo(225,255);
-            ctx.lineTo(255,268);
-            ctx.stroke();
-        ctx.beginPath(); //left arm
-            ctx.moveTo(225,255);
-            ctx.lineTo(185,250);
-            ctx.stroke();
-    }
-    if(numWrong==14){
-        ctx.fillRect(90, 145, 160, 120); //cover body
-        ctx.lineWidth=3;
-        ctx.beginPath(); //body
-            ctx.moveTo(245,264);
-            ctx.lineTo(150,268);
-            ctx.stroke();
-        ctx.beginPath(); //right arm
-            ctx.moveTo(225,268);
-            ctx.lineTo(255,268);
-            ctx.stroke();
-        ctx.beginPath(); //left arm
-            ctx.moveTo(225,264);
-            ctx.lineTo(185,264);
-            ctx.stroke();
-        ctx.fillRect(138, 90, 24, 24); //cover face
-        ctx.beginPath(); //straight mouth
-            ctx.moveTo(140,108);
-            ctx.lineTo(160,108);
-            ctx.stroke();
-        ctx.beginPath(); //left eye
-            ctx.arc(143, 95, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //right eye
-            ctx.arc(157, 95, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-    }
-    if(numWrong==15){
-        ctx.fillRect(138, 102, 24, 12); //cover mouth
-        ctx.beginPath(); //mouth
-            ctx.arc(150, 103, 9, 0, Math.PI);
-            ctx.stroke();
-    }
-    if(numWrong==16){
-        ctx.fillRect(128, 78, 45, 45); //cover head
-        ctx.beginPath(); //head
-            ctx.arc(150, 120, 20, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //left eye
-            ctx.arc(143, 115, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //right eye
-            ctx.arc(157, 115, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //mouth
-            ctx.arc(150, 123, 9, 0, Math.PI);
-            ctx.stroke();
-    }
-    if(numWrong==17){
-        ctx.fillRect(128, 98, 45, 45); //cover head
-        ctx.beginPath(); //head
-            ctx.arc(150, 140, 20, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //left eye
-            ctx.arc(143, 135, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //right eye
-            ctx.arc(157, 135, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //mouth
-            ctx.arc(150, 143, 9, 0, Math.PI);
-            ctx.stroke();
-    }
-    if(numWrong==17){
-        ctx.fillRect(128, 118, 45, 45); //cover head
-        ctx.beginPath(); //head
-            ctx.arc(150, 160, 20, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //left eye
-            ctx.arc(143, 155, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //right eye
-            ctx.arc(157, 155, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //straight mouth
-            ctx.moveTo(140,168);
-            ctx.lineTo(160,168);
-            ctx.stroke();
-    }
-    if(numWrong==18){
-        ctx.fillRect(128, 138, 45, 45); //cover head
-        ctx.beginPath(); //head
-            ctx.arc(150, 180, 20, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //left eye
-            ctx.arc(143, 175, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //right eye
-            ctx.arc(157, 175, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //straight mouth
-            ctx.moveTo(140,188);
-            ctx.lineTo(160,188);
-            ctx.stroke();
-    }
-    if(numWrong==19){
-        ctx.fillRect(128, 158, 45, 45); //cover head
-        ctx.beginPath(); //head
-            ctx.arc(150, 200, 20, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //left eye
-            ctx.arc(143, 195, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //right eye
-            ctx.arc(157, 195, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //sad mouth
-            ctx.arc(150, 213, 9, 0, Math.PI, true);
-            ctx.stroke();
-    }
-    if(numWrong==20){
-        ctx.fillRect(128, 178, 45, 45); //cover head
-        ctx.beginPath(); //head
-            ctx.arc(150, 220, 20, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //left eye
-            ctx.arc(143, 215, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //right eye
-            ctx.arc(157, 215, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //sad mouth
-            ctx.arc(150, 233, 9, 0, Math.PI, true);
-            ctx.stroke();
-    }
-    if(numWrong==21){
-        ctx.fillRect(128, 198, 45, 45); //cover head
-        ctx.beginPath(); //head
-            ctx.arc(150, 240, 20, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //left eye
-            ctx.arc(143, 235, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //right eye
-            ctx.arc(157, 235, 3.5, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //sad mouth
-            ctx.arc(150, 253, 9, 0, Math.PI, true);
-            ctx.stroke();
-    }
-    if(numWrong==22){
-        ctx.fillRect(128, 218, 45, 45); //cover head
-        ctx.beginPath(); //head
-            ctx.arc(150, 243, 20, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //left eye
-            ctx.moveTo(140,234);
-            ctx.lineTo(146,239);
-            ctx.stroke();
-            ctx.moveTo(140,239);
-            ctx.lineTo(146,234);
-            ctx.stroke();
-        ctx.beginPath(); //right eye
-            ctx.moveTo(154,234);
-            ctx.lineTo(160,239);
-            ctx.stroke(); 
-            ctx.moveTo(154,239);
-            ctx.lineTo(160,234);
-            ctx.stroke();
-        ctx.beginPath(); //straight mouth
-            ctx.moveTo(140,250);
-            ctx.lineTo(160,250);
-            ctx.stroke();
-    }
-    if(numWrong==23){
-        ctx.fillRect(128, 220, 45, 45); //cover head
-        ctx.beginPath(); //head
-            ctx.arc(129, 246, 20, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //left eye
-            ctx.moveTo(115,245);
-            ctx.lineTo(121,250);
-            ctx.stroke();
-            ctx.moveTo(115,250);
-            ctx.lineTo(121,245);
-            ctx.stroke();
-        ctx.beginPath(); //right eye
-            ctx.moveTo(120,234);
-            ctx.lineTo(126,239);
-            ctx.stroke(); 
-            ctx.moveTo(120,239);
-            ctx.lineTo(126,234);
-            ctx.stroke();
-        ctx.beginPath(); //straight mouth
-            ctx.moveTo(129,257);
-            ctx.lineTo(138,240);
-            ctx.stroke();
-    }
-    if(numWrong==24){
-        ctx.fillRect(106, 218, 45, 45); //cover head
-        ctx.fillRect(120, 261, 25, 5); //cover rest of head
-        ctx.beginPath(); //head
-            ctx.arc(108, 247, 20, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //left eye
-            ctx.moveTo(105,257);
-            ctx.lineTo(111,262);
-            ctx.stroke();
-            ctx.moveTo(105,262);
-            ctx.lineTo(111,257);
-            ctx.stroke();
-        ctx.beginPath(); //right eye
-            ctx.moveTo(94,248);
-            ctx.lineTo(100,253);
-            ctx.stroke(); 
-            ctx.moveTo(94,253);
-            ctx.lineTo(100,248);
-            ctx.stroke();
-        ctx.beginPath(); //straight mouth
-            ctx.moveTo(121,248);
-            ctx.lineTo(101,235);
-            ctx.stroke();
-    }
-    if(numWrong==25){
-        ctx.fillRect(86, 220, 45, 45); //cover head
-        ctx.beginPath(); //head
-            ctx.arc(87, 248, 20, 0, 2*Math.PI);
-            ctx.stroke();
-        ctx.beginPath(); //left eye
-            ctx.moveTo(78,250);
-            ctx.lineTo(84,256);
-            ctx.stroke();
-            ctx.moveTo(78,256);
-            ctx.lineTo(84,250);
-            ctx.stroke();
-        ctx.beginPath(); //right eye
-            ctx.moveTo(91,250);
-            ctx.lineTo(97,256);
-            ctx.stroke(); 
-            ctx.moveTo(91,256);
-            ctx.lineTo(97,250);
-            ctx.stroke();
-        ctx.beginPath(); //straight mouth
-            ctx.moveTo(77,240);
-            ctx.lineTo(97,240);
-            ctx.stroke();
-    }*/
+ 
 }
 
 function reset(){
@@ -955,5 +609,9 @@ function reset(){
     }
  
 }
+
+    
+        
+
 
 

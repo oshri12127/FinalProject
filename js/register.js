@@ -10,7 +10,7 @@
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-
+  var globalname = "";
   //Reference for form collection(3)
   let formMessage = firebase.database().ref('register');
 
@@ -27,10 +27,12 @@
     e.preventDefault();
   
     let name = document.querySelector('#name').value;
+    globalname = name;
     let email = document.querySelector('#email').value;
     let password = document.querySelector('#password').value;
     const ref = firebase.storage().ref();
-    const file = document.querySelector('#cameraInput').files[0]
+    const file = document.querySelector('#cameraInput').files[0];
+
     const fname = (+new Date()) + '-' + file.name;
     
     const metadata = {
@@ -41,7 +43,8 @@
     
     task.then(snapshot => snapshot.ref.getDownloadURL())
       .then((url) => {
-        updateData(name,url);
+		resetScore(url);
+		updateData(name,url);
         
       })
       .catch(console.error);
@@ -51,27 +54,43 @@
         alert("Registration Failed!\nPassword must be at least 6 characters.");
         window.location.reload();
     });
-    resetScore(); 
+    //resetScore(); 
     demo();
  
   }
 
-
+    var userNow2;
+  function resetScore(url){
+	  
+	var point0 = 0;
+	firebase.auth().onAuthStateChanged(function (user){
+		userNow2 = user.uid;
+    var datesRef = firebase.database().ref();
+    
+	datesRef.child(userNow2).child('data').set({
+        score: point0,
+        username: globalname,
+		photoURL: url
+    });
+	});
+}
   //Send Message to Firebase(4)
   
   function updateData(name,url) {
+	  
       
     var user = firebase.auth().currentUser;
-
+    
     user.updateProfile({
       displayName: name,
       photoURL: url
     }).then(function() {
-      // Update successful.
+      
     }).catch(function(error) {
       // An error happened.
     });
-
+  
+    
   }
 
   function sleep(ms) {
@@ -84,17 +103,20 @@
     await sleep(3000);
     location.href = "hangman.html";
   }
-    var userNow2;
-  function resetScore()
-{
-	var point0=0;
+ /*   var userNow2;
+  function resetScore(url){
+	  console.log(url);
+	var point0 = 0;
 	firebase.auth().onAuthStateChanged(function (user){
 		userNow2 = user.uid;
     var datesRef = firebase.database().ref();
-	datesRef.child(userNow2).set({
-				score: point0
+    
+	datesRef.child(userNow2).child('data').set({
+        score: point0,
+        username: globalname,
+		//photoURL: url
     });
 	});
-}
+}*/
   
   
