@@ -60,7 +60,7 @@
   }
 
     var userNow2;
-  function resetScore(url){
+  function resetScore(url){ //for the real time data base
 	  
 	var point0 = 0;
 	firebase.auth().onAuthStateChanged(function (user){
@@ -76,7 +76,7 @@
 }
   //Send Message to Firebase(4)
   
-  function updateData(name,url) {
+  function updateData(name,url) { //for the authontication
 	  
       
     var user = firebase.auth().currentUser;

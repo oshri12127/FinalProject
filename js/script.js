@@ -45,7 +45,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
 function refillCategory(cat,api){
-
+//upload data from the api to the array
     $.ajax({
         url: api,
         type: "GET",
@@ -64,7 +64,7 @@ function refillCategory(cat,api){
 }
 
 
-function sp(){
+function sp(){ //single player
     refillCategory(movies,"https://opentdb.com/api.php?amount=30&category=11&difficulty=medium&type=multiple");
     refillCategory(computerScience,"https://opentdb.com/api.php?amount=30&category=18&difficulty=medium&type=multiple");
     refillCategory(sports,"https://opentdb.com/api.php?amount=30&category=21&difficulty=medium&type=multiple");
@@ -77,7 +77,7 @@ function sp(){
 
 }
 function hs(){
-
+//high score
     document.getElementById('introPage').style.display = "none";
     document.getElementById('singlePage').style.display = "none";
     document.getElementById('HighScore').style.display = "block";
@@ -91,13 +91,13 @@ function sortScors(){
     
     
     var ref = firebase.database().ref();
-    ref.once('value',function(snap) {
+    ref.once('value',function(snap) { //once - only for one time connected
     snap.forEach(function(item) {
         var itemVal = item.val();
         keys.push(itemVal);
         
     });
-    keys.sort((a,b) => (a.data.score<b.data.score) ? 1:-1);
+    keys.sort((a,b) => (a.data.score<b.data.score) ? 1:-1);//sort the users by the score
     for(var i = 0;i<keys.length;i++){
         var img = document.getElementById('picH' + i);
         var name = document.getElementById('name' + i);
@@ -113,7 +113,20 @@ function sortScors(){
 });
 }
 
-function out(){
+function YourPoints(){
+	firebase.auth().onAuthStateChanged(function (user){
+		userNow2 = user.uid;
+        var datesRef = firebase.database().ref();
+	
+	return datesRef.child(userNow2).child('data').once('value').then(function(snapshot) {
+  var points = snapshot.child('score').val();
+  document.getElementById('characterCount').innerHTML = "your points: " + points;
+});
+});
+	
+}
+
+function out(){ //logout
 
      firebase.auth().signOut().then(function () {
                 window.location.href = "index.html";
@@ -156,24 +169,13 @@ function countChars(countfrom,displayto) {
     document.getElementById(displayto).innerHTML = len;
 }
 
-function YourPoints(){
-	firebase.auth().onAuthStateChanged(function (user){
-		userNow2 = user.uid;
-    var datesRef = firebase.database().ref();
-	
-	return datesRef.child(userNow2).child('data').once('value').then(function(snapshot) {
-  var points = snapshot.child('score').val();
-  document.getElementById('characterCount').innerHTML = "your points: " + points;
-});
-});
-	
-}
+
 function clu(obj){
 
     if(obj.value != "hide"){
-    if(scorePerGame!=0)scorePerGame -= 20;
-    document.getElementById('scores').innerHTML = "score: " + scorePerGame;
-    document.getElementById('clue').innerHTML =  currentQuestion;
+        if(scorePerGame != 0) scorePerGame -= 20;
+        document.getElementById('scores').innerHTML = "score: " + scorePerGame;
+        document.getElementById('clue').innerHTML =  currentQuestion;
     }
     obj.value = "hide";
 
@@ -196,7 +198,7 @@ function hangman(cat){
             x--;
             y--;
         }
-        else{
+        else{ 
             rand = Math.floor(Math.random()*cat.length);
             word = cat[rand].correct_answer;
             var x = word.length;
@@ -334,13 +336,13 @@ function splitWords(){
 
 function guessLetter(){
     var correct = 0;
-    
     var target = event.target || event.srcElement;
     target.style.visibility = "hidden";
     var lower = target.id;
     var upper = document.getElementById(lower).getAttribute('value');
     var results = document.getElementById('results');
     var ul1 = document.getElementById('underline1').offsetWidth;
+
     for(a = 1; a < 101; a++){
         if(document.getElementById('letter'+a).innerHTML === upper || document.getElementById('letter'+a).innerHTML === lower){
             document.getElementById('letter'+a).style.visibility = "visible";
@@ -349,17 +351,19 @@ function guessLetter(){
             document.getElementById('scores').innerHTML = "score: " +scorePerGame;
         }
     }
-    if(correct==0){
-        numWrong++;
-		if(numWrong<7)
+
+    if(correct == 0){ //no letter was correct 
+        numWrong++; 
+		if(numWrong < 7)
 			scorePerGame+=-10;
 		document.getElementById('scores').innerHTML = "score: " +scorePerGame;
         hang();
     }
-    if(numWrong==6){
+    if(numWrong == 6){
         results.style.visibility = "visible";
         results.style.color = "red";
         results.innerHTML = "You can't miss another letter!";
+
         if(ul1 == 50){
             results.style.lineHeight = "70px";
             results.style.fontSize = "30px";
@@ -373,7 +377,7 @@ function guessLetter(){
             results.style.fontSize = "20px";
         }
     }
-    if(numWrong==7)//stop in 7 worng;
+    if(numWrong == 7)//stop in 7 worng;
 	{
         scorePerGame=0;
 		document.getElementById('scores').innerHTML = "score: " +scorePerGame;
@@ -399,7 +403,7 @@ function guessLetter(){
 		updateScore();
     }
 	
-    if(numRight==phraseLength){//to complete all the word
+    if(numRight == phraseLength){//to complete all the word
         updateScore();
 		win();	
     }
@@ -411,7 +415,7 @@ function updateScore()//update score to firebase that game over(per game)
     var datesRef = firebase.database().ref();
 	
 	datesRef.child(userNow2).child('data').child('score').transaction(function(score){
-				return score+scorePerGame;
+				return score+scorePerGame; //transcation==> Todo += to the score
     });
 
     console.log();
@@ -427,6 +431,7 @@ function win(){
         document.getElementById('letterBank').style.display = "none";
         again.style.display = "block";
         document.getElementById('home').style.display = "block";
+
         if(ul1 == 50){
             again.style.marginTop = "75px";
             results.style.marginTop = "75px";
@@ -448,7 +453,7 @@ function win(){
 
 function hang(){
     var ctx = document.getElementById("hangman").getContext('2d');
-    if(numWrong==1){
+    if(numWrong == 1){
         ctx.beginPath(); //head
             ctx.arc(150, 100, 20, 0, 2*Math.PI);
             ctx.stroke();
@@ -462,13 +467,13 @@ function hang(){
             ctx.arc(150, 103, 9, 0, Math.PI);
             ctx.stroke();
     }
-    if(numWrong==2){
+    if(numWrong == 2){
         ctx.beginPath(); //body
             ctx.moveTo(150,120);
             ctx.lineTo(150,190);
             ctx.stroke();
     }
-    if(numWrong==3){
+    if(numWrong == 3){
         ctx.fillStyle = "white";
         ctx.fillRect(138, 102, 24, 12); //cover mouth
         ctx.beginPath(); //straight mouth
@@ -480,13 +485,13 @@ function hang(){
             ctx.lineTo(180,160);
             ctx.stroke();
     }
-    if(numWrong==4){
+    if(numWrong == 4){
         ctx.beginPath(); //left arm
             ctx.moveTo(150,135);
             ctx.lineTo(120,160);
             ctx.stroke();
     }
-    if(numWrong==5){
+    if(numWrong == 5){
         ctx.fillRect(138, 102, 24, 12); //cover mouth
         ctx.beginPath(); //sad mouth
             ctx.arc(150, 112, 9, 0, Math.PI, true);
@@ -496,13 +501,13 @@ function hang(){
             ctx.lineTo(180,230);
             ctx.stroke();
     }
-    if(numWrong==6){
+    if(numWrong == 6){
         ctx.beginPath(); //left leg
             ctx.moveTo(151,188);
             ctx.lineTo(120,230);
             ctx.stroke();
     }
-    if(numWrong==7){
+    if(numWrong == 7){
         ctx.fillRect(138, 90, 24, 24); //cover face
         ctx.fillRect(118, 121.2, 70, 120); //cover body
         ctx.beginPath(); //straight mouth
@@ -552,6 +557,7 @@ function reset(){
     var ul1 = document.getElementById('underline1').offsetWidth;
     var results = document.getElementById('results');
     var again = document.getElementById('again');
+    
     for(a = 1; a < 101; a++){
         document.getElementById('letter'+a).innerHTML = "&nbsp;";
         document.getElementById('underline'+a).style.width = ul1 + "px";
