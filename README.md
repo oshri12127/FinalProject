@@ -1,4 +1,4 @@
-# Web-FinalProject
+# Web-FinalProject-Hangman Game- 2019
 HTML, JavaScript, CSS, Bootstrap, DB: Firebase
 
 Web address: https://oshri12127.github.io/Web-FinalProject-/
