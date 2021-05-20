@@ -1,7 +1,7 @@
 # Web-FinalProject-Hangman Game- 2019
 HTML, JavaScript, CSS, Bootstrap, DB: Firebase
 
-Web address: https://oshri12127.github.io/Web-FinalProject-/
+Web address: https://oshri12127.github.io/Web-FinalProject-Hangman-Game-/
 
 Final Project osher abergel evyatar hai
 
